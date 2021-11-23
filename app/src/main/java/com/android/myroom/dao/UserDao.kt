@@ -10,17 +10,20 @@ import com.android.myroom.entity.User
 interface UserDao {
 
     @Query("SELECT * FROM user")
-    fun getAll():List<User>
+    suspend fun getAll():List<User>
 
     @Query("select * from user where uid in (:userIds)")
-    fun loadAllByIds(userIds:IntArray) :List<User>
+    suspend fun loadAllByIds(userIds:IntArray) :List<User>
 
     @Query("select * from user where first_name like :first and last_name like :last limit 1")
-    fun findByName(first:String ,last:String ) :User
+    suspend fun findByName(first:String ,last:String ) :User
 
     @Insert
-    fun insertAll(vararg users:User)
+    suspend fun insertAll(vararg users:User)
+
+    @Insert
+    suspend fun insert(user:User)
 
     @Delete
-    fun delete(user:User)
+    suspend fun delete(user:User)
 }
